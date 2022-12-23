@@ -4,14 +4,10 @@ const form = document.getElementById('bookForm');
 let myLibrary = [];
 
 form.addEventListener('submit', (e) => {
-    const title = form.elements['title'];
-    const author = form.elements['author'];
-    const pages = form.elements['pages'];
-    const read = form.elements['read'];
-    let bookTitle = title.value;
-    let bookAuthor = author.value;
-    let bookPages = pages.value; // number?
-    let bookRead = read.value; // true false?
+    let bookTitle = form.elements['title'].value;
+    let bookAuthor = form.elements['author'].value;
+    let bookPages = form.elements['pages'].value; // number?
+    let bookRead = form.elements['read'].checked; // true false?
     e.preventDefault();
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead)
     displayLibrary();
@@ -35,8 +31,15 @@ function removeBookfromLibrary(e) {
     displayLibrary();
 }
 
+function readToggle(e) {
+    targetBookID = e.target.id;
+    myLibrary[targetBookID].read = !myLibrary[targetBookID].read;
+    displayLibrary();
+}
+
 function displayLibrary() {
     const currentLibrary = document.querySelectorAll('.card')
+
     for (let i = 0; i < currentLibrary.length; i++) {
         currentLibrary[i].remove();
     }
@@ -52,10 +55,16 @@ function displayLibrary() {
         removeBtn.textContent = 'Remove';
         removeBtn.setAttribute("id", bookID);
 
+        const readBtn = document.createElement('button');
+        readBtn.textContent = 'Read';
+        readBtn.setAttribute("id", bookID);
+
         shielf.appendChild(card);
         card.appendChild(removeBtn);
+        card.appendChild(readBtn);
 
         removeBtn.addEventListener('click', removeBookfromLibrary)
+        readBtn.addEventListener('click', readToggle)
 
         for (let item in book) {
             const data = document.createElement('p');
@@ -67,4 +76,9 @@ function displayLibrary() {
     });
 }
 
-console.log(myLibrary);
+
+addBookToLibrary("41234123", "author", 123421, true)
+addBookToLibrary("asdfasdf", "author", 321, true)
+addBookToLibrary("fasdfasdf", "autasdfhor", 323, false)
+
+displayLibrary();
