@@ -13,7 +13,7 @@ form.addEventListener('submit', (e) => {
     displayLibrary();
 });
 
-function book(title, author, pages, read) {
+function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -21,7 +21,7 @@ function book(title, author, pages, read) {
 }
 
 function addBookToLibrary(title, author, pages, read) {
-    const newBook = new book(title, author, pages, read);
+    const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
 }
 
@@ -45,18 +45,18 @@ function displayLibrary() {
     }
 
     myLibrary.forEach((book, i) => {
-        let bookID = i + 1 - 1;
+        let bookID = i++;
 
         const card = document.createElement('div');
-        card.classList.add('card');
-        card.setAttribute("id", bookID);
-
         const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
-        removeBtn.setAttribute("id", bookID);
-
         const readBtn = document.createElement('button');
+        card.classList.add('card');
+        
+        removeBtn.textContent = 'Remove';
         readBtn.textContent = 'Read';
+        
+        removeBtn.setAttribute("id", bookID);
+        card.setAttribute("id", bookID);
         readBtn.setAttribute("id", bookID);
 
         shielf.appendChild(card);
